@@ -5,5 +5,5 @@ variable "region" {
 
 variable "cidr_blocks" {
   description = "IPs that should be whitelisted in security group"
-  default = ["0.0.0.0/0"]
+  default     = ["0.0.0.0/0"]
 }

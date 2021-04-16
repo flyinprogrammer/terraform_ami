@@ -29,9 +29,6 @@ resource "aws_launch_template" "default" {
   vpc_security_group_ids               = [data.aws_security_group.default.id]
   user_data                            = data.template_cloudinit_config.config.rendered
   key_name                             = aws_key_pair.default.key_name
-  iam_instance_profile {
-    name = "AWSDefaultEC2Role"
-  }
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
@@ -41,7 +38,13 @@ resource "aws_launch_template" "default" {
       throughput  = 125
     }
   }
-
+  iam_instance_profile {
+    name = "AWSDefaultEC2Role"
+  }
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+  }
 }
 
 resource "aws_spot_fleet_request" "default" {
