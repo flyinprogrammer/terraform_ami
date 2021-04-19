@@ -54,8 +54,19 @@ build {
   }
 
   provisioner "shell" {
+    expect_disconnect = true
     scripts = [
-      "installation/base_packages.sh",
+      "installation/upgrade_reboot.sh",
     ]
   }
+
+  provisioner "shell" {
+    pause_before = "1m"
+    scripts = [
+      "installation/base_packages.sh",
+      "installation/install_nginx.sh",
+      "installation/install_wireguard.sh",
+    ]
+  }
+
 }
